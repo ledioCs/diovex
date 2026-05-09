@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DioVex — Build. Brand. Scale.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<!-- ✅ Google Analytics: sign up at analytics.google.com, then uncomment and replace GA_MEASUREMENT_ID -->
+<!--
+<script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+<script>
+  window.dataLayer=window.dataLayer||[];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date()); gtag('config','GA_MEASUREMENT_ID');
+</script>
+-->
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --ink:#0f0f0e;--ink-soft:#3a3a38;--ink-muted:#7a7a77;
+  --surface:#f9f8f5;--white:#ffffff;
+  --accent:#c8a96e;--accent-dark:#9e7d44;
+  --border:rgba(15,15,14,0.1);--radius:4px;--radius-lg:12px;
+}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--surface);color:var(--ink);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+
+/* SCROLL REVEAL */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.65s ease,transform 0.65s ease;}
+.reveal.visible{opacity:1;transform:none;}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 5vw;height:72px;background:rgba(249,248,245,0.93);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);}
+.logo{display:inline-flex;align-items:center;gap:10px;text-decoration:none;z-index:201;}
+.logo-wordmark{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;letter-spacing:.5px;color:var(--ink);}
+.logo-wordmark span{color:var(--accent);}
+nav ul{display:flex;gap:36px;list-style:none;}
+nav ul a{font-size:14px;color:var(--ink-soft);text-decoration:none;letter-spacing:.3px;transition:color .2s;}
+nav ul a:hover{color:var(--ink);}
+.nav-cta{background:var(--ink);color:var(--white)!important;padding:10px 22px;border-radius:var(--radius);font-weight:500!important;transition:background .2s!important;}
+.nav-cta:hover{background:var(--accent-dark)!important;}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:201;background:none;border:none;padding:4px;}
+.hamburger span{display:block;width:24px;height:2px;background:var(--ink);border-radius:2px;transition:all .3s;}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+.mobile-menu{display:none;position:fixed;inset:0;z-index:199;background:var(--surface);flex-direction:column;align-items:center;justify-content:center;gap:32px;}
+.mobile-menu.open{display:flex;}
+.mobile-menu a{font-family:'Playfair Display',serif;font-size:28px;font-weight:600;color:var(--ink);text-decoration:none;transition:color .2s;}
+.mobile-menu a:hover{color:var(--accent);}
+
+/* HERO */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;overflow:hidden;}
+.hero-left{display:flex;flex-direction:column;justify-content:center;padding:140px 6vw 80px 5vw;background:var(--surface);}
+.hero-right{position:relative;overflow:hidden;clip-path:polygon(8% 0,100% 0,100% 100%,0% 100%);background:linear-gradient(145deg,#edeae1,#dfd8cc);display:flex;align-items:center;justify-content:center;}
+.hero-right svg{opacity:.22;width:60%;max-width:340px;}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent-dark);margin-bottom:28px;}
+.hero-tag::before{content:'';display:block;width:28px;height:1px;background:var(--accent);}
+h1{font-family:'Playfair Display',serif;font-size:clamp(48px,6vw,76px);font-weight:600;line-height:1.1;letter-spacing:-1px;color:var(--ink);margin-bottom:24px;}
+h1 em{font-style:italic;color:var(--accent);}
+.hero-sub{font-size:18px;font-weight:300;color:var(--ink-soft);max-width:480px;margin-bottom:48px;line-height:1.8;}
+.hero-actions{display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
+.btn-primary{background:var(--ink);color:var(--white);padding:16px 36px;border-radius:var(--radius);font-size:15px;font-weight:500;text-decoration:none;letter-spacing:.3px;transition:background .2s,transform .15s;display:inline-block;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.btn-primary:hover{background:var(--accent-dark);transform:translateY(-1px);}
+.btn-ghost{color:var(--ink);font-size:15px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;border-bottom:1px solid var(--ink);padding-bottom:2px;transition:color .2s,border-color .2s;background:none;border-top:none;border-left:none;border-right:none;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.btn-ghost:hover{color:var(--accent-dark);border-bottom-color:var(--accent-dark);}
+.hero-stats{display:flex;gap:48px;margin-top:72px;padding-top:40px;border-top:1px solid var(--border);}
+.stat-num{font-family:'Playfair Display',serif;font-size:36px;font-weight:600;color:var(--ink);line-height:1;margin-bottom:6px;}
+.stat-label{font-size:13px;color:var(--ink-muted);letter-spacing:.3px;}
+
+/* TICKER */
+.ticker{background:var(--ink);padding:14px 0;overflow:hidden;}
+.ticker-track{display:flex;animation:ticker 30s linear infinite;white-space:nowrap;}
+.ticker-item{display:inline-flex;align-items:center;gap:16px;padding:0 32px;font-size:13px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.55);}
+.ticker-dot{width:4px;height:4px;border-radius:50%;background:var(--accent);flex-shrink:0;}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* SECTIONS */
+section{padding:100px 5vw;}
+.section-tag{font-size:12px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent-dark);margin-bottom:16px;display:flex;align-items:center;gap:10px;}
+.section-tag::before{content:'';display:block;width:20px;height:1px;background:var(--accent);}
+h2{font-family:'Playfair Display',serif;font-size:clamp(32px,4vw,52px);font-weight:600;line-height:1.15;letter-spacing:-.5px;color:var(--ink);margin-bottom:16px;}
+h2 em{font-style:italic;color:var(--accent);}
+.section-intro{font-size:17px;font-weight:300;color:var(--ink-soft);max-width:500px;line-height:1.8;margin-bottom:64px;}
+
+/* SERVICES */
+#services{background:var(--white);}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;}
+.service-card{padding:44px 36px;background:var(--white);border-right:1px solid var(--border);border-bottom:1px solid var(--border);transition:background .3s;}
+.service-card:hover{background:var(--surface);}
+.service-num{font-family:'Playfair Display',serif;font-size:13px;color:var(--accent);margin-bottom:24px;display:block;letter-spacing:1px;}
+.service-icon{width:48px;height:48px;background:var(--ink);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;margin-bottom:20px;}
+.service-icon svg{width:22px;height:22px;stroke:var(--white);fill:none;stroke-width:1.5;}
+h3{font-family:'Playfair Display',serif;font-size:20px;font-weight:600;color:var(--ink);margin-bottom:10px;line-height:1.3;}
+.service-desc{font-size:14px;color:var(--ink-soft);line-height:1.7;margin-bottom:20px;}
+.service-list{list-style:none;display:flex;flex-direction:column;gap:6px;}
+.service-list li{font-size:13px;color:var(--ink-muted);display:flex;align-items:center;gap:8px;}
+.service-list li::before{content:'';width:14px;height:1px;background:var(--accent);flex-shrink:0;}
+
+/* PRICING */
+#pricing{background:var(--surface);}
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;}
+.pricing-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:40px 36px;position:relative;transition:transform .2s,box-shadow .2s;}
+.pricing-card:hover{transform:translateY(-4px);box-shadow:0 20px 60px rgba(15,15,14,.08);}
+.pricing-card.featured{background:var(--ink);border-color:var(--ink);}
+.pricing-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--accent);color:var(--ink);font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:5px 16px;border-radius:20px;white-space:nowrap;}
+.pricing-name{font-family:'Playfair Display',serif;font-size:20px;font-weight:600;color:var(--ink);margin-bottom:6px;}
+.pricing-card.featured .pricing-name{color:var(--white);}
+.pricing-desc{font-size:13px;color:var(--ink-muted);margin-bottom:28px;}
+.pricing-card.featured .pricing-desc{color:rgba(255,255,255,.5);}
+.pricing-price{font-family:'Playfair Display',serif;font-size:48px;font-weight:600;color:var(--ink);line-height:1;margin-bottom:4px;}
+.pricing-card.featured .pricing-price{color:var(--accent);}
+.pricing-price sup{font-size:22px;vertical-align:super;}
+.pricing-period{font-size:13px;color:var(--ink-muted);margin-bottom:32px;}
+.pricing-card.featured .pricing-period{color:rgba(255,255,255,.4);}
+.pricing-divider{height:1px;background:var(--border);margin-bottom:28px;}
+.pricing-card.featured .pricing-divider{background:rgba(255,255,255,.1);}
+.pricing-features{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:36px;}
+.pricing-features li{font-size:14px;color:var(--ink-soft);display:flex;align-items:flex-start;gap:10px;}
+.pricing-card.featured .pricing-features li{color:rgba(255,255,255,.75);}
+.pricing-features li::before{content:'✓';color:var(--accent);font-weight:700;flex-shrink:0;margin-top:1px;}
+.pricing-btn{display:block;width:100%;padding:14px;background:var(--ink);color:var(--white);border:none;border-radius:var(--radius);font-size:14px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;letter-spacing:.3px;transition:background .2s;}
+.pricing-btn:hover{background:var(--accent-dark);}
+.pricing-card.featured .pricing-btn{background:var(--accent);color:var(--ink);}
+.pricing-card.featured .pricing-btn:hover{background:var(--white);}
+
+/* PORTFOLIO */
+#portfolio{background:var(--white);}
+.portfolio-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;}
+.portfolio-item{border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--border);transition:transform .2s,box-shadow .2s;}
+.portfolio-item:hover{transform:translateY(-4px);box-shadow:0 20px 60px rgba(15,15,14,.1);}
+.portfolio-thumb{height:210px;display:flex;align-items:center;justify-content:center;}
+.portfolio-thumb svg{width:72px;opacity:.18;}
+.portfolio-info{padding:24px 28px;background:var(--white);}
+.portfolio-tag{font-size:11px;font-weight:500;letter-spacing:1.2px;text-transform:uppercase;color:var(--accent-dark);margin-bottom:8px;display:block;}
+.portfolio-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:600;color:var(--ink);margin-bottom:8px;}
+.portfolio-desc{font-size:13px;color:var(--ink-muted);line-height:1.6;}
+
+/* TESTIMONIALS */
+#testimonials{background:var(--surface);}
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;}
+.testi-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:36px 32px;transition:transform .2s;}
+.testi-card:hover{transform:translateY(-3px);}
+.testi-stars{display:flex;gap:4px;margin-bottom:20px;}
+.testi-stars span{color:var(--accent);font-size:16px;}
+.testi-quote{font-family:'Playfair Display',serif;font-size:16px;font-style:italic;color:var(--ink);line-height:1.7;margin-bottom:24px;}
+.testi-author{display:flex;align-items:center;gap:12px;}
+.testi-avatar{width:44px;height:44px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:17px;color:var(--accent);font-weight:600;flex-shrink:0;}
+.testi-name{font-size:14px;font-weight:500;color:var(--ink);}
+.testi-role{font-size:12px;color:var(--ink-muted);}
+
+/* PROCESS */
+#process{background:var(--white);}
+.process-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));position:relative;}
+.process-steps::before{content:'';position:absolute;top:28px;left:0;right:0;height:1px;background:var(--border);z-index:0;}
+.step{padding:0 32px 0 0;position:relative;z-index:1;}
+.step-num{width:56px;height:56px;border-radius:50%;background:var(--white);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:20px;font-weight:600;color:var(--ink);margin-bottom:28px;}
+.step:first-child .step-num{background:var(--ink);color:var(--white);border-color:var(--ink);}
+.step-title{font-weight:500;font-size:16px;color:var(--ink);margin-bottom:10px;}
+.step-desc{font-size:14px;color:var(--ink-soft);line-height:1.7;}
+
+/* WHY */
+#why{background:var(--ink);}
+#why h2{color:var(--white);}
+#why .section-tag{color:var(--accent);}
+#why .section-tag::before{background:var(--accent);}
+#why .section-intro{color:rgba(255,255,255,.6);}
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius-lg);overflow:hidden;}
+.why-item{padding:48px 40px;background:var(--ink);transition:background .2s;}
+.why-item:hover{background:#1a1a18;}
+.why-num{font-family:'Playfair Display',serif;font-size:48px;font-weight:600;color:var(--accent);line-height:1;margin-bottom:16px;}
+.why-title{font-size:18px;font-weight:500;color:var(--white);margin-bottom:10px;}
+.why-desc{font-size:14px;color:rgba(255,255,255,.5);line-height:1.7;}
+
+/* FAQ */
+#faq{background:var(--surface);}
+.faq-list{max-width:720px;display:flex;flex-direction:column;}
+.faq-item{border-bottom:1px solid var(--border);}
+.faq-question{width:100%;background:none;border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:22px 0;text-align:left;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:500;color:var(--ink);gap:16px;transition:color .2s;}
+.faq-question:hover{color:var(--accent-dark);}
+.faq-icon{width:28px;height:28px;border-radius:50%;background:var(--ink);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;transition:background .2s,transform .3s;line-height:1;}
+.faq-item.open .faq-icon{background:var(--accent);transform:rotate(45deg);}
+.faq-answer{font-size:15px;color:var(--ink-soft);line-height:1.8;max-height:0;overflow:hidden;transition:max-height .4s ease,padding-bottom .3s;}
+.faq-item.open .faq-answer{max-height:300px;padding-bottom:22px;}
+
+/* CTA */
+.cta-section{background:var(--white);text-align:center;padding:120px 5vw;}
+.cta-inner{max-width:620px;margin:0 auto;}
+.cta-section h2{margin-bottom:20px;}
+.cta-section>div>p{font-size:17px;font-weight:300;color:var(--ink-soft);margin-bottom:48px;}
+.cta-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+
+/* FOOTER */
+footer{background:var(--ink);padding:60px 5vw 40px;}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:48px;flex-wrap:wrap;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:32px;}
+.footer-brand p{font-size:14px;color:rgba(255,255,255,.45);max-width:260px;margin-top:12px;line-height:1.7;}
+.footer-links h4{font-size:12px;font-weight:500;letter-spacing:1.2px;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:16px;}
+.footer-links ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.footer-links ul a{font-size:14px;color:rgba(255,255,255,.6);text-decoration:none;transition:color .2s;}
+.footer-links ul a:hover{color:var(--white);}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.footer-bottom p{font-size:13px;color:rgba(255,255,255,.3);}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;z-index:999;align-items:center;justify-content:center;}
+.modal-overlay.open{display:flex;}
+.modal-backdrop{position:absolute;inset:0;background:rgba(15,15,14,.65);backdrop-filter:blur(4px);}
+.modal-box{position:relative;background:var(--surface);border-radius:12px;padding:48px;width:100%;max-width:520px;margin:20px;box-shadow:0 32px 80px rgba(0,0,0,.25);max-height:90vh;overflow-y:auto;}
+.modal-close{position:absolute;top:20px;right:20px;background:none;border:none;cursor:pointer;color:var(--ink-muted);font-size:22px;line-height:1;}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+.field{margin-bottom:14px;}
+.field label{font-size:12px;font-weight:500;letter-spacing:.8px;text-transform:uppercase;color:var(--ink-soft);display:block;margin-bottom:6px;}
+.field input,.field select,.field textarea{width:100%;padding:12px 14px;border:1px solid rgba(15,15,14,.15);border-radius:var(--radius);font-size:14px;font-family:'DM Sans',sans-serif;background:var(--white);outline:none;transition:border .2s;color:var(--ink);}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent);}
+
+/* COOKIE */
+#cookieBanner{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:998;background:var(--ink);color:var(--white);border-radius:var(--radius-lg);padding:18px 24px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;max-width:560px;width:calc(100% - 48px);box-shadow:0 16px 48px rgba(0,0,0,.3);font-size:13px;transition:opacity .3s,transform .3s;}
+#cookieBanner.hidden{opacity:0;pointer-events:none;transform:translateX(-50%) translateY(20px);}
+#cookieBanner p{color:rgba(255,255,255,.7);flex:1;min-width:200px;}
+#cookieBanner button{background:var(--accent);color:var(--ink);border:none;border-radius:var(--radius);padding:9px 20px;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;}
+
+/* MOBILE */
+@media(max-width:768px){
+  nav ul{display:none;}
+  .hamburger{display:flex;}
+  .hero{grid-template-columns:1fr;}
+  .hero-right{display:none;}
+  .hero-left{padding:120px 5vw 60px;}
+  .hero-stats{gap:28px;flex-wrap:wrap;}
+  .why-grid{grid-template-columns:1fr;}
+  .process-steps::before{display:none;}
+  .step{padding:0 0 32px;}
+  .footer-top{flex-direction:column;}
+  .modal-box{padding:32px 24px;}
+  .field-row{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">
+    <svg width="30" height="30" viewBox="0 0 44 44" fill="none">
+      <polygon points="22,2 42,22 22,42 2,22" fill="#0f0f0e"/>
+      <polygon points="22,11 33,22 22,33 11,22" fill="#c8a96e"/>
+      <polygon points="22,17 27,22 22,27 17,22" fill="#0f0f0e"/>
+    </svg>
+    <span class="logo-wordmark">Dio<span>Vex</span></span>
+  </a>
+  <ul>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#portfolio">Work</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#" onclick="openModal();return false;" class="nav-cta">Get Started</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#services" onclick="toggleMenu()">Services</a>
+  <a href="#pricing" onclick="toggleMenu()">Pricing</a>
+  <a href="#portfolio" onclick="toggleMenu()">Work</a>
+  <a href="#testimonials" onclick="toggleMenu()">Reviews</a>
+  <a href="#faq" onclick="toggleMenu()">FAQ</a>
+  <a href="#" onclick="toggleMenu();openModal();">Get Started</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Digital Growth Agency</div>
+    <h1>Your brand.<br><em>Amplified.</em><br>Your business, scaled.</h1>
+    <p class="hero-sub">DioVex builds high-performance websites, crafts distinctive brands, and drives the marketing that fills your pipeline.</p>
+    <div class="hero-actions">
+      <button onclick="openModal()" class="btn-primary">Start a Project</button>
+      <a href="#services" class="btn-ghost">See our services →</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-num">140+</div><div class="stat-label">Brands built</div></div>
+      <div><div class="stat-num">97%</div><div class="stat-label">Client retention</div></div>
+      <div><div class="stat-num">3×</div><div class="stat-label">Avg. growth rate</div></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <svg viewBox="0 0 300 300" fill="none">
+      <polygon points="150,10 290,150 150,290 10,150" fill="#0f0f0e"/>
+      <polygon points="150,55 245,150 150,245 55,150" fill="#c8a96e"/>
+      <polygon points="150,100 200,150 150,200 100,150" fill="#0f0f0e"/>
+      <polygon points="150,130 170,150 150,170 130,150" fill="#c8a96e"/>
+    </svg>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="ticker-item"><span class="ticker-dot"></span>Website Design</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Brand Identity</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Digital Marketing</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>SEO & Growth</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>UI/UX Design</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Hosting & Maintenance</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Lead Generation</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Website Design</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Brand Identity</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Digital Marketing</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>SEO & Growth</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>UI/UX Design</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Hosting & Maintenance</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Lead Generation</span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-tag reveal">What we do</div>
+  <h2 class="reveal">Four pillars of<br><em>business growth</em></h2>
+  <p class="section-intro reveal">Everything a modern business needs to stand out, convert visitors, and scale with confidence.</p>
+  <div class="services-grid">
+    <div class="service-card reveal d1">
+      <span class="service-num">01</span>
+      <div class="service-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+      <h3>Website Building</h3>
+      <p class="service-desc">Fast, conversion-focused websites that look exceptional and work even better.</p>
+      <ul class="service-list"><li>Custom design & development</li><li>Mobile-first, blazing fast</li><li>CMS & e-commerce</li><li>Landing pages that convert</li></ul>
+    </div>
+    <div class="service-card reveal d2">
+      <span class="service-num">02</span>
+      <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+      <h3>Brand Identity</h3>
+      <p class="service-desc">A brand that commands attention and earns trust. Visual systems that stick.</p>
+      <ul class="service-list"><li>Logo & visual identity</li><li>Brand guidelines</li><li>Typography & color systems</li><li>Brand strategy & positioning</li></ul>
+    </div>
+    <div class="service-card reveal d3">
+      <span class="service-num">03</span>
+      <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+      <h3>Digital Marketing</h3>
+      <p class="service-desc">Data-driven campaigns that put your business in front of the right people.</p>
+      <ul class="service-list"><li>SEO & content marketing</li><li>Paid ads (Google, Meta)</li><li>Email & automation</li><li>Analytics & reporting</li></ul>
+    </div>
+    <div class="service-card reveal d4" style="border-right:none;">
+      <span class="service-num">04</span>
+      <div class="service-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="7" rx="1"/><rect x="2" y="14" width="20" height="7" rx="1"/><path d="M6 7h.01M6 18h.01"/></svg></div>
+      <h3>Hosting & Maintenance</h3>
+      <p class="service-desc">We keep your site live, fast, and secure. Monthly plans, zero headaches.</p>
+      <ul class="service-list"><li>Managed hosting & deployment</li><li>Domain setup & SSL</li><li>Monthly updates & backups</li><li>Priority support & edits</li></ul>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="section-tag reveal">Transparent pricing</div>
+  <h2 class="reveal">Simple plans,<br><em>no surprises</em></h2>
+  <p class="section-intro reveal">Pick the package that fits where you are now. Upgrade any time as you grow.</p>
+  <div class="pricing-grid">
+    <div class="pricing-card reveal d1">
+      <div class="pricing-name">Starter</div>
+      <div class="pricing-desc">For new businesses getting online fast</div>
+      <div class="pricing-price"><sup>$</sup>799</div>
+      <div class="pricing-period">one-time payment</div>
+      <div class="pricing-divider"></div>
+      <ul class="pricing-features">
+        <li>5-page custom website</li>
+        <li>Mobile responsive design</li>
+        <li>Basic brand colours & fonts</li>
+        <li>Contact form</li>
+        <li>1 round of revisions</li>
+        <li>Delivered in 7 days</li>
+      </ul>
+      <button class="pricing-btn" onclick="openModal()">Get Started →</button>
+    </div>
+    <div class="pricing-card featured reveal d2">
+      <div class="pricing-badge">Most Popular</div>
+      <div class="pricing-name">Growth</div>
+      <div class="pricing-desc">For businesses ready to scale fast</div>
+      <div class="pricing-price"><sup>$</sup>2,499</div>
+      <div class="pricing-period">one-time + optional retainer</div>
+      <div class="pricing-divider"></div>
+      <ul class="pricing-features">
+        <li>Up to 10 pages + blog</li>
+        <li>Full brand identity package</li>
+        <li>SEO foundation setup</li>
+        <li>Google Analytics integration</li>
+        <li>3 rounds of revisions</li>
+        <li>3 months hosting included</li>
+      </ul>
+      <button class="pricing-btn" onclick="openModal()">Get Started →</button>
+    </div>
+    <div class="pricing-card reveal d3">
+      <div class="pricing-name">Pro</div>
+      <div class="pricing-desc">Full-service agency partnership</div>
+      <div class="pricing-price"><sup>$</sup>599</div>
+      <div class="pricing-period">per month · min. 3 months</div>
+      <div class="pricing-divider"></div>
+      <ul class="pricing-features">
+        <li>Everything in Growth</li>
+        <li>Ongoing marketing campaigns</li>
+        <li>Monthly SEO & content</li>
+        <li>Paid ads management</li>
+        <li>Monthly performance reports</li>
+        <li>Dedicated account manager</li>
+      </ul>
+      <button class="pricing-btn" onclick="openModal()">Get Started →</button>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="section-tag reveal">Our work</div>
+  <h2 class="reveal">Built to <em>impress,</em><br>built to perform</h2>
+  <p class="section-intro reveal">A selection of brands and websites we've built for clients across industries.</p>
+  <div class="portfolio-grid">
+    <div class="portfolio-item reveal d1">
+      <div class="portfolio-thumb" style="background:linear-gradient(135deg,#1a1a18,#2e2e2a);">
+        <svg viewBox="0 0 44 44" fill="none"><polygon points="22,2 42,22 22,42 2,22" fill="#fff"/><polygon points="22,11 33,22 22,33 11,22" fill="#c8a96e"/><polygon points="22,17 27,22 22,27 17,22" fill="#1a1a18"/></svg>
+      </div>
+      <div class="portfolio-info">
+        <span class="portfolio-tag">Branding + Website</span>
+        <div class="portfolio-title">Aurum Finance</div>
+        <p class="portfolio-desc">Complete brand identity and marketing website for a boutique financial advisory firm. Enquiries doubled in month one.</p>
+      </div>
+    </div>
+    <div class="portfolio-item reveal d2">
+      <div class="portfolio-thumb" style="background:linear-gradient(135deg,#1e3a2f,#2d5a45);">
+        <svg viewBox="0 0 44 44" fill="none"><polygon points="22,2 42,22 22,42 2,22" fill="#fff"/><polygon points="22,11 33,22 22,33 11,22" fill="#6dbf8a"/><polygon points="22,17 27,22 22,27 17,22" fill="#1e3a2f"/></svg>
+      </div>
+      <div class="portfolio-info">
+        <span class="portfolio-tag">E-commerce + SEO</span>
+        <div class="portfolio-title">Verdure Organics</div>
+        <p class="portfolio-desc">E-commerce store with SEO strategy that tripled organic traffic within 4 months of launch.</p>
+      </div>
+    </div>
+    <div class="portfolio-item reveal d3">
+      <div class="portfolio-thumb" style="background:linear-gradient(135deg,#1a1a3a,#2a2a5a);">
+        <svg viewBox="0 0 44 44" fill="none"><polygon points="22,2 42,22 22,42 2,22" fill="#fff"/><polygon points="22,11 33,22 22,33 11,22" fill="#8a8ae0"/><polygon points="22,17 27,22 22,27 17,22" fill="#1a1a3a"/></svg>
+      </div>
+      <div class="portfolio-info">
+        <span class="portfolio-tag">Website + Marketing</span>
+        <div class="portfolio-title">Nexloft Tech</div>
+        <p class="portfolio-desc">SaaS landing page and Google Ads campaign that cut cost-per-lead by 40% in the first 30 days.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="section-tag reveal">What clients say</div>
+  <h2 class="reveal">Results speak<br><em>for themselves</em></h2>
+  <p class="section-intro reveal">Don't just take our word for it.</p>
+  <div class="testi-grid">
+    <div class="testi-card reveal d1">
+      <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <div class="testi-quote">"DioVex built our site in under two weeks and it looked better than anything in our industry. Enquiries doubled within a month."</div>
+      <div class="testi-author"><div class="testi-avatar">J</div><div><div class="testi-name">James Okafor</div><div class="testi-role">CEO, Aurum Finance</div></div></div>
+    </div>
+    <div class="testi-card reveal d2">
+      <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <div class="testi-quote">"The branding was incredible. They nailed exactly what I wanted on the first round. The whole process was smooth and professional."</div>
+      <div class="testi-author"><div class="testi-avatar">S</div><div><div class="testi-name">Sofia Mertens</div><div class="testi-role">Founder, Verdure Organics</div></div></div>
+    </div>
+    <div class="testi-card reveal d3">
+      <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <div class="testi-quote">"Our Google Ads cost per lead dropped 40% after DioVex rebuilt our landing page. The ROI was clear within the first 30 days."</div>
+      <div class="testi-author"><div class="testi-avatar">M</div><div><div class="testi-name">Marcus Li</div><div class="testi-role">Growth Lead, Nexloft Tech</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="section-tag reveal">How it works</div>
+  <h2 class="reveal">From idea to <em>live</em> in<br>four clear steps</h2>
+  <p class="section-intro reveal">No guesswork. You always know what's happening and what's next.</p>
+  <div class="process-steps">
+    <div class="step reveal d1"><div class="step-num">01</div><div class="step-title">Discovery Call</div><p class="step-desc">We learn your goals, audience, and what success looks like for you.</p></div>
+    <div class="step reveal d2"><div class="step-num">02</div><div class="step-title">Strategy & Plan</div><p class="step-desc">A tailored roadmap covering design, messaging, and channels.</p></div>
+    <div class="step reveal d3"><div class="step-num">03</div><div class="step-title">Build & Refine</div><p class="step-desc">We build with your feedback at every stage — no surprises.</p></div>
+    <div class="step reveal d4"><div class="step-num">04</div><div class="step-title">Launch & Grow</div><p class="step-desc">We go live and keep optimising. Growth doesn't stop at launch.</p></div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section id="why">
+  <div class="section-tag reveal">Why DioVex</div>
+  <h2 class="reveal">Built for businesses<br>that want <em>results</em></h2>
+  <p class="section-intro reveal">We're not a generalist agency. We specialise in scaling businesses serious about growth.</p>
+  <div class="why-grid">
+    <div class="why-item reveal d1"><div class="why-num">01</div><div class="why-title">Strategy first, always</div><p class="why-desc">Every decision is grounded in clear business strategy — not guesswork.</p></div>
+    <div class="why-item reveal d2"><div class="why-num">02</div><div class="why-title">End-to-end delivery</div><p class="why-desc">One team handles website, brand, and marketing. No handoffs, no gaps.</p></div>
+    <div class="why-item reveal d3"><div class="why-num">03</div><div class="why-title">Transparent reporting</div><p class="why-desc">Clear dashboards and monthly calls so you always know what's happening.</p></div>
+    <div class="why-item reveal d4"><div class="why-num">04</div><div class="why-title">Built to scale with you</div><p class="why-desc">Our systems grow with you — no rebuilding from scratch as you expand.</p></div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="section-tag reveal">FAQ</div>
+  <h2 class="reveal">Common <em>questions</em></h2>
+  <p class="section-intro reveal">Everything you need to know before getting started.</p>
+  <div class="faq-list reveal">
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">How long does a website take to build?<span class="faq-icon">+</span></button>
+      <div class="faq-answer">Starter websites are delivered in 7 days. Growth packages typically take 2–3 weeks depending on feedback rounds. We'll always give you a clear timeline before we start.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">Do I need to provide my own content?<span class="faq-icon">+</span></button>
+      <div class="faq-answer">Ideally yes — you know your business best. But if you need help with copywriting, we can include that in your package. Just mention it when you reach out.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">What happens after the site launches?<span class="faq-icon">+</span></button>
+      <div class="faq-answer">We offer Hosting & Maintenance plans to keep your site updated, backed up, and secure. We also offer ongoing marketing retainers for clients who want to keep growing after launch.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">Can I update the site myself?<span class="faq-icon">+</span></button>
+      <div class="faq-answer">Yes. We can build on a CMS like WordPress or Webflow so you can edit text and images without touching code. Or our maintenance plan includes small monthly edits for you.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">Do you work with international clients?<span class="faq-icon">+</span></button>
+      <div class="faq-answer">Absolutely. DioVex works globally. All communication is remote via video calls and email, and we've successfully delivered projects across multiple time zones.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">What's your payment process?<span class="faq-icon">+</span></button>
+      <div class="faq-answer">We take 50% upfront and 50% on delivery for project-based work. Monthly retainers are billed at the start of each month. We accept bank transfer, PayPal, and card payments.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <div class="cta-inner reveal">
+    <div class="section-tag" style="justify-content:center;">Let's work together</div>
+    <h2>Ready to grow your <em>business?</em></h2>
+    <p>Tell us about your project and we'll get back to you within 24 hours with a clear plan and honest pricing.</p>
+    <div class="cta-btns">
+      <button onclick="openModal()" class="btn-primary">Book a Free Call</button>
+      <a href="mailto:hello@diovex.com" class="btn-ghost">hello@diovex.com →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#" class="logo">
+        <svg width="28" height="28" viewBox="0 0 44 44" fill="none">
+          <polygon points="22,2 42,22 22,42 2,22" fill="#ffffff"/>
+          <polygon points="22,11 33,22 22,33 11,22" fill="#c8a96e"/>
+          <polygon points="22,17 27,22 22,27 17,22" fill="#0f0f0e"/>
+        </svg>
+        <span class="logo-wordmark" style="color:#fff;">Dio<span>Vex</span></span>
+      </a>
+      <p>We build, brand, and market businesses ready to scale. Working globally.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#services">Website Building</a></li>
+        <li><a href="#services">Brand Identity</a></li>
+        <li><a href="#services">Digital Marketing</a></li>
+        <li><a href="#services">Hosting & Maintenance</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#portfolio">Our Work</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 DioVex. All rights reserved.</p>
+    <p style="color:rgba(255,255,255,.2);">Build. Brand. Scale.</p>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div id="contactModal" class="modal-overlay">
+  <div class="modal-backdrop" onclick="closeModal()"></div>
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+      <svg width="22" height="22" viewBox="0 0 44 44" fill="none">
+        <polygon points="22,2 42,22 22,42 2,22" fill="#0f0f0e"/>
+        <polygon points="22,11 33,22 22,33 11,22" fill="#c8a96e"/>
+        <polygon points="22,17 27,22 22,27 17,22" fill="#0f0f0e"/>
+      </svg>
+      <span style="font-family:'Playfair Display',serif;font-size:18px;font-weight:600;">Start a project</span>
+    </div>
+    <p style="font-size:14px;color:#7a7a77;margin-bottom:28px;">Fill in your details and we'll be in touch within 24 hours.</p>
+    <div id="modalForm">
+      <div class="field-row">
+        <div class="field"><label>Name</label><input id="f-name" type="text" placeholder="Your name"/></div>
+        <div class="field"><label>Email</label><input id="f-email" type="email" placeholder="you@company.com"/></div>
+      </div>
+      <div class="field">
+        <label>Service needed</label>
+        <select id="f-service">
+          <option value="">Select a service…</option>
+          <option>Website Building — Starter ($799)</option>
+          <option>Website Building — Growth ($2,499)</option>
+          <option>Brand Identity</option>
+          <option>Digital Marketing</option>
+          <option>Hosting & Maintenance</option>
+          <option>Pro Monthly Retainer ($599/mo)</option>
+          <option>Not sure — let's talk</option>
+        </select>
+      </div>
+      <div class="field" style="margin-bottom:24px;">
+        <label>Tell us about your project</label>
+        <textarea id="f-msg" rows="4" placeholder="What are you building? What's your goal?" style="resize:vertical;"></textarea>
+      </div>
+      <!-- ✅ Formspree: replace YOUR_FORM_ID after signing up at formspree.io -->
+      <button id="submitBtn" onclick="submitForm()" style="width:100%;padding:15px;background:#0f0f0e;color:#fff;border:none;border-radius:4px;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s;" onmouseover="this.style.background='#9e7d44'" onmouseout="this.style.background='#0f0f0e'">Send Message →</button>
+      <p style="font-size:12px;color:#aaa;text-align:center;margin-top:12px;">We respond within 24 hours. No spam, ever.</p>
+    </div>
+    <div id="modalSuccess" style="display:none;text-align:center;padding:20px 0;">
+      <div style="width:56px;height:56px;background:#0f0f0e;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#c8a96e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h3 style="font-family:'Playfair Display',serif;font-size:22px;margin-bottom:10px;">Message sent!</h3>
+      <p style="font-size:15px;color:#7a7a77;">We'll get back to you within 24 hours.</p>
+    </div>
+  </div>
+</div>
+
+<!-- COOKIE BANNER -->
+<div id="cookieBanner">
+  <p>We use cookies to improve your experience and analyse site traffic. By continuing, you agree to our use of cookies.</p>
+  <button onclick="acceptCookies()">Got it</button>
+</div>
+
+<script>
+// Modal
+function openModal(){
+  document.getElementById('contactModal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){
+  document.getElementById('contactModal').classList.remove('open');
+  document.body.style.overflow='';
+  document.getElementById('modalForm').style.display='block';
+  document.getElementById('modalSuccess').style.display='none';
+  ['f-name','f-email','f-service','f-msg'].forEach(id=>document.getElementById(id).value='');
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+
+async function submitForm(){
+  const name=document.getElementById('f-name').value.trim();
+  const email=document.getElementById('f-email').value.trim();
+  const service=document.getElementById('f-service').value;
+  const msg=document.getElementById('f-msg').value.trim();
+  if(!name||!email||!service||!msg){alert('Please fill in all fields.');return;}
+
+  // OPTION A — Formspree (uncomment after getting your form ID from formspree.io):
+  // const res = await fetch('https://formspree.io/f/YOUR_FORM_ID',{
+  //   method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},
+  //   body:JSON.stringify({name,email,service,message:msg})
+  // });
+
+  // OPTION B — mailto fallback (works now, no setup needed):
+  const sub=encodeURIComponent(`DioVex enquiry — ${service}`);
+  const body=encodeURIComponent(`Name: ${name}\nEmail: ${email}\nService: ${service}\n\nMessage:\n${msg}`);
+  window.open(`mailto:hello@diovex.com?subject=${sub}&body=${body}`);
+
+  document.getElementById('modalForm').style.display='none';
+  document.getElementById('modalSuccess').style.display='block';
+}
+
+// Mobile menu
+function toggleMenu(){
+  document.getElementById('hamburger').classList.toggle('open');
+  document.getElementById('mobileMenu').classList.toggle('open');
+  document.body.style.overflow=document.getElementById('mobileMenu').classList.contains('open')?'hidden':'';
+}
+
+// FAQ
+function toggleFaq(btn){
+  const item=btn.closest('.faq-item');
+  const isOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+  if(!isOpen)item.classList.add('open');
+}
+
+// Scroll reveal
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+// Cookie banner
+if(localStorage.getItem('cookiesAccepted'))document.getElementById('cookieBanner').classList.add('hidden');
+function acceptCookies(){
+  localStorage.setItem('cookiesAccepted','1');
+  document.getElementById('cookieBanner').classList.add('hidden');
+}
+</script>
+</body>
+</html>
